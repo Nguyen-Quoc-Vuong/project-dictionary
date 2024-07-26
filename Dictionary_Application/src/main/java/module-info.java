@@ -14,6 +14,7 @@ module com.example.dictionary_application {
     requires javafx.web;
     requires com.fasterxml.jackson.databind;
     requires org.xerial.sqlitejdbc;
+    requires java.sql;
 
     opens application to javafx.fxml;
     exports application;

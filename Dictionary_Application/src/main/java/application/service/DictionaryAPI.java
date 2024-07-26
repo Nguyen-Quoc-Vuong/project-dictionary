@@ -9,18 +9,19 @@ import java.net.HttpURLConnection;
 import java.net.URL;
 import java.nio.charset.StandardCharsets;
 
-public class DictionaryAPI {
+public class DictionaryAPI extends APIService {
 
     // use to parse Json data
     private static final ObjectMapper objectMapper = new ObjectMapper();
 
-    public static JsonNode getWords(String word) throws Exception {
-        String apiUrl = "https://api.dictionaryapi.dev/api/v2/entries/en/" + word;
+    public DictionaryAPI() {
+        super(null, "https://api.dictionaryapi.dev/api/v2/entries/en/", null );
+    }
+    public JsonNode getWords(String word) throws Exception {
+        String apiUrl = endpointUrl + word;
         StringBuilder result = new StringBuilder();
 
-        URL url = new URL(apiUrl);
-        HttpURLConnection con = (HttpURLConnection) url.openConnection();
-        con.setRequestMethod("GET");
+        HttpURLConnection con = createConnection(apiUrl);
 
         // read response
         try (BufferedReader reader = new BufferedReader(new InputStreamReader(con.getInputStream(), StandardCharsets.UTF_8))) {
@@ -33,5 +34,16 @@ public class DictionaryAPI {
 
         //convert StringBuilder into JsonNode
         return objectMapper.readTree(result.toString());
+    }
+
+    @Override
+    public String makeRequestAPI(String word) {
+        try {
+            JsonNode response = getWords(word);
+            return response.toString();
+        } catch (Exception e) {
+            e.printStackTrace();
+            return "error" + e.getMessage();
+        }
     }
 }

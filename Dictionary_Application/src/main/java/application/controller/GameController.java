@@ -1,22 +1,18 @@
 package application.controller;
 
+import application.model.Question;
 import javafx.animation.KeyFrame;
 import javafx.animation.KeyValue;
 import javafx.animation.Timeline;
-import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
-import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
-import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.StackPane;
 import javafx.stage.Stage;
 import javafx.util.Duration;
 
-import java.io.BufferedReader;
-import java.io.FileReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.*;
@@ -118,12 +114,10 @@ public class GameController {
             List<Button> answerButtons = List.of(answer1, answer2, answer3, answer4);
             List<String> options = currentQuestion.getDummyOptions();
 
-            // Ensure that the correct answer is included in the options
             if (!options.contains(currentQuestion.getCorrectAnswer())) {
                 options.set(0, currentQuestion.getCorrectAnswer());
             }
 
-            // Randomly shuffle the options
             Collections.shuffle(options);
 
             for (int i = 0; i < answerButtons.size(); i++) {

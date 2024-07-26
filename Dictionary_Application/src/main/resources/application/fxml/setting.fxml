@@ -7,16 +7,23 @@
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.StackPane?>
+<?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
 <StackPane prefHeight="209.0" prefWidth="360.0" stylesheets="@../style/style.css" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="application.controller.SettingController">
     <TabPane prefHeight="252.0" prefWidth="400.0" tabClosingPolicy="UNAVAILABLE">
         <Tab text="Add Word">
             <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="181.0" prefWidth="433.0">
-                <TextField fx:id="wordField" layoutX="149.0" layoutY="38.0" prefHeight="28.0" prefWidth="115.0" AnchorPane.bottomAnchor="114.0" AnchorPane.leftAnchor="149.0" AnchorPane.rightAnchor="96.0" AnchorPane.topAnchor="38.0" />
-                <Text layoutX="60.0" layoutY="67.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Word" />
-                <Text layoutX="60.0" layoutY="107.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Meaning" />
-                <TextField fx:id="meaningField" layoutX="151.0" layoutY="96.0" prefHeight="28.0" prefWidth="112.0" AnchorPane.bottomAnchor="56.0" AnchorPane.leftAnchor="151.0" AnchorPane.rightAnchor="97.0" AnchorPane.topAnchor="96.0" />
+                <TextField fx:id="wordField" layoutX="180.0" layoutY="25.0" prefHeight="40.0" prefWidth="115.0" AnchorPane.bottomAnchor="114.0" AnchorPane.leftAnchor="180.0" AnchorPane.rightAnchor="65.0" AnchorPane.topAnchor="25.0" />
+                <Text layoutX="78.0" layoutY="51.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Word" wrappingWidth="45.478515625">
+               <font>
+                  <Font size="16.0" />
+               </font></Text>
+                <Text layoutX="69.0" layoutY="101.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Meaning">
+               <font>
+                  <Font size="16.0" />
+               </font></Text>
+                <TextField fx:id="meaningField" layoutX="182.0" layoutY="76.0" prefHeight="38.0" prefWidth="112.0" AnchorPane.bottomAnchor="65.0" AnchorPane.leftAnchor="182.0" AnchorPane.rightAnchor="66.0" AnchorPane.topAnchor="76.0" />
                 <Button fx:id="addWordButton" layoutX="262.0" layoutY="130.0" mnemonicParsing="false" onAction="#handleAddWord" text="Save" />
             <Button fx:id="cancelButton" layoutX="75.0" layoutY="130.0" mnemonicParsing="false" text="Cancel" />
             </AnchorPane>
@@ -24,11 +31,17 @@
         <Tab text="Update Word">
             <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                 <children>
-                    <Text layoutX="74.0" layoutY="52.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Word" />
-                    <Text layoutX="65.0" layoutY="103.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Meaning" />
-                    <TextField fx:id="updateWordField" layoutX="149.0" layoutY="33.0" prefHeight="28.0" prefWidth="89.0" AnchorPane.bottomAnchor="119.0" AnchorPane.leftAnchor="149.0" AnchorPane.rightAnchor="122.0" AnchorPane.topAnchor="33.0" />
-                    <TextField fx:id="updateMeaningField" layoutX="145.0" layoutY="85.0" prefHeight="25.0" prefWidth="98.0" AnchorPane.bottomAnchor="70.0" AnchorPane.leftAnchor="145.0" AnchorPane.rightAnchor="117.0" AnchorPane.topAnchor="85.0" />
-                    <Button fx:id="updateWordButton" layoutX="243.0" layoutY="125.0" mnemonicParsing="false" onAction="#handleUpdateWord" text="Save" />
+                    <Text layoutX="74.0" layoutY="52.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Word">
+                  <font>
+                     <Font size="16.0" />
+                  </font></Text>
+                    <Text layoutX="65.0" layoutY="103.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Meaning">
+                  <font>
+                     <Font size="16.0" />
+                  </font></Text>
+                    <TextField fx:id="updateWordField" layoutX="145.0" layoutY="33.0" prefHeight="38.0" prefWidth="99.0" AnchorPane.bottomAnchor="108.0" AnchorPane.leftAnchor="145.0" AnchorPane.rightAnchor="116.0" AnchorPane.topAnchor="33.0" />
+                    <TextField fx:id="updateMeaningField" layoutX="145.0" layoutY="85.0" prefHeight="34.0" prefWidth="98.0" AnchorPane.bottomAnchor="60.0" AnchorPane.leftAnchor="145.0" AnchorPane.rightAnchor="117.0" AnchorPane.topAnchor="85.0" />
+                    <Button fx:id="updateWordButton" layoutX="258.0" layoutY="136.0" mnemonicParsing="false" onAction="#handleUpdateWord" text="Save" />
                <Button layoutX="63.0" layoutY="136.0" mnemonicParsing="false" text="Cancel" />
                 </children>
             </AnchorPane>
@@ -36,7 +49,10 @@
         <Tab text="Delete Word">
             <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="600.0" prefWidth="700.0">
                 <children>
-                    <Text layoutX="78.0" layoutY="87.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Word" wrappingWidth="40.571428571428555" />
+                    <Text layoutX="72.0" layoutY="88.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Word" wrappingWidth="50.857134137834805">
+                  <font>
+                     <Font size="17.0" />
+                  </font></Text>
                     <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Text" />
                     <TextField fx:id="deleteWordField" layoutX="135.0" layoutY="63.0" prefHeight="26.0" prefWidth="160.0" />
                     <Button fx:id="deleteWordButton" layoutX="244.0" layoutY="127.0" mnemonicParsing="false" onAction="#handleDeleteWord" text="Delete" />

@@ -22,9 +22,19 @@ public abstract class BaseController {
     @FXML
     protected StackPane contentPane;
 
+    protected SearchController searchController;
+
+
     @FXML
     private void onSearchButtonClick() {
-        loadView("/application/fxml/search.fxml", "Search");
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/application/fxml/search.fxml"));
+            Node content = loader.load();
+            searchController = loader.getController();
+            contentPane.getChildren().setAll(content);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     @FXML
@@ -47,7 +57,8 @@ public abstract class BaseController {
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/application/fxml/setting.fxml"));
             Parent root = loader.load();
-            SettingController controller = loader.getController();
+            SettingController settingController = loader.getController();
+            settingController.setSearchController(searchController);
 
             Stage dialogStage = new Stage();
             dialogStage.initModality(Modality.APPLICATION_MODAL);
@@ -76,31 +87,10 @@ public abstract class BaseController {
 
     protected void loadView(String fxmlPath, String title) {
         try {
-//            FXMLLoader loader = new FXMLLoader(getClass().getResource(fxmlPath));
-//            Parent view = loader.load();
-//            Stage stage = (Stage) searchButton.getScene().getWindow();
-//            stage.setScene(new Scene(view));
-//            stage.setTitle(title);
-//            stage.show();
             Node content = FXMLLoader.load(getClass().getResource(fxmlPath));
             contentPane.getChildren().setAll(content);
         } catch (Exception e) {
             e.printStackTrace();
         }
     }
-
-//    protected void navigateTo(String fxmlPath) {
-//        try {
-//            FXMLLoader loader = new FXMLLoader(getClass().getResource(fxmlPath));
-//            Parent view = loader.load();
-//            Stage stage = (Stage) getStage();
-//            stage.setScene(new Scene(view));
-//            stage.show();
-//        } catch (Exception e) {
-//            e.printStackTrace();
-//            showAlert(Alert.AlertType.ERROR,"Error", "Failed to open fxml.");
-//        }
-//    }
-
-//    protected abstract Stage getStage();
 }

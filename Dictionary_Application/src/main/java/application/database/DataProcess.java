@@ -15,6 +15,8 @@ public class DataProcess {
             statement.setString(1, word);
             statement.setString(2, meaning);
             statement.executeUpdate();
+        } catch (SQLException e) {
+            e.printStackTrace();
         }
     }
 

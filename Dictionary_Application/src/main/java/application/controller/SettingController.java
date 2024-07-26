@@ -17,6 +17,11 @@ public class SettingController extends BaseController {
     private Button addWordButton, updateWordButton, deleteWordButton, saveSettingButton, cancelButton;
 
     private final DataProcess dataProcess = new DataProcess();
+    private SearchController searchController;
+
+    public void setSearchController(SearchController searchController) {
+        this.searchController = searchController;
+    }
 
     @FXML
     private void handleAddWord(ActionEvent event) throws SQLException {
@@ -30,6 +35,7 @@ public class SettingController extends BaseController {
                     wordField.clear();
                     meaningField.clear();
                     showAlert(Alert.AlertType.INFORMATION,"Success", "Word added successfully");
+                    searchController.refreshData();
                 } catch (SQLException e) {
                     showAlert(Alert.AlertType.ERROR,"Error", "Failed to add word.");
                 }
@@ -51,8 +57,9 @@ public class SettingController extends BaseController {
                     dataProcess.deleteWordFromDatabase(word);
                     deleteWordField.clear(); // Clear the field after deletion
                     showAlert(Alert.AlertType.INFORMATION, "Success", "Word deleted successfully");
+                    searchController.refreshData();
                 } else {
-                    showAlert(Alert.AlertType.ERROR, "Error", "Word does not exist in application.database");
+                    showAlert(Alert.AlertType.ERROR, "Error", "Word does not exist in database");
                 }
             } catch (SQLException e) {
                 showAlert(Alert.AlertType.ERROR, "Error", "Error while deleting.");
@@ -73,6 +80,7 @@ public class SettingController extends BaseController {
                     updateWordField.clear();
                     updateMeaningField.clear();
                     showAlert(Alert.AlertType.INFORMATION, "Success", "Word updated successfully");
+                    searchController.refreshData();
                 } catch (SQLException e) {
                     showAlert(Alert.AlertType.ERROR,"Error", "Error while updating word");
                 }
@@ -93,9 +101,4 @@ public class SettingController extends BaseController {
             showAlert(Alert.AlertType.ERROR, "Save error", "Failed to save setting");
         }
     }
-
-//    @Override
-//    protected Stage getStage() {
-//        return (Stage) searchButton.getScene().getWindow();
-//    }
 }

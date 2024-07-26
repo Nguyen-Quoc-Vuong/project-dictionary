@@ -61,8 +61,4 @@ public class Pronounciation extends APIService {
             return "Exception tss";
         }
     }
-
-//    public static void main(String[] args) {
-//        launch(args);
-//    }
 }

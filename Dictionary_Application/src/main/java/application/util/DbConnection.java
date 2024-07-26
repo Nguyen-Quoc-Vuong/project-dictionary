@@ -15,11 +15,12 @@ public class DbConnection {
     }
 
     private void createConnection() {
-        String url = "jdbc:sqlite:F:/dictionary.db";
-
+        String url = "jdbc:sqlite:D:/dictionary.db";
         try {
             Class.forName("org.sqlite.JDBC");
-            this.dbLink = DriverManager.getConnection(url);
+            if (dbLink == null || dbLink.isClosed()) {
+                this.dbLink = DriverManager.getConnection(url);
+            }
         } catch (SQLException | ClassNotFoundException e) {
             throw new RuntimeException(e);
         }
@@ -37,26 +38,18 @@ public class DbConnection {
                 createConnection();
             }
         } catch (SQLException e) {
-            throw new RuntimeException(e);
+            e.printStackTrace();
         }
         return dbLink;
     }
-//    private Connection dbLink;
-//    public Connection getDBConnection(){
-//        System.out.println("Try to connect to the db");
-//        String url = "jdbc:sqlite:D:/dictionary.db";
-//
-//        try {
-//            Class.forName("org.sqlite.JDBC");
-//            Connection connection = DriverManager.getConnection(url);
-//            System.out.println("Connected successfully.");
-//            return connection;
-//        } catch (ClassNotFoundException e) {
-//            e.printStackTrace();
-//        } catch (SQLException e) {
-//            e.printStackTrace();
-//        }
-//
-//        return null;
-//    }
+
+    public void closeConnection() {
+        if (dbLink != null) {
+            try {
+                dbLink.close();
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+        }
+    }
 }

@@ -1,5 +1,6 @@
 package application.controller;
 
+import application.model.Question;
 import javafx.animation.KeyFrame;
 import javafx.animation.KeyValue;
 import javafx.animation.Timeline;
@@ -8,6 +9,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.control.Label;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.StackPane;
 import javafx.stage.Stage;
@@ -18,6 +20,9 @@ import java.io.InputStream;
 import java.util.*;
 
 public class Game2Controller {
+
+    @FXML
+    private Label checkAnswer;
     @FXML
     private Button EngButton1;
 
@@ -48,6 +53,8 @@ public class Game2Controller {
     @FXML
     private AnchorPane AnchorPane;
 
+    private Timeline answerStatusTimeline;
+
     private List<Question> questions;
     private int currentQuestionIndex;
 
@@ -69,6 +76,15 @@ public class Game2Controller {
         // Shuffle questions
         Collections.shuffle(questions);
 
+        answerStatusTimeline = new Timeline();
+
+        // Thiết lập sự kiện kết thúc cho Timeline
+        answerStatusTimeline.setOnFinished(event -> {
+            checkAnswer.setText(""); // Ẩn đi nội dung khi kết thúc
+        });
+
+        KeyFrame keyFrame = new KeyFrame(Duration.seconds(2), new KeyValue(checkAnswer.textProperty(), ""));
+        answerStatusTimeline.getKeyFrames().add(keyFrame);
         // Display the first question
         showQuestion();
     }
@@ -170,19 +186,19 @@ public class Game2Controller {
             VieButton4.setDisable(true);
 
             // Display the player's score
-            showResult(score, currentQuestionIndex);
+            showResult(score);
         }
     }
-    private void showResult(int score, int totalQuestions) {
+    private void showResult(int score) {
         try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/application/fxml/result.fxml"));
-            AnchorPane resultPane = loader.load();
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/application/fxml/result2.fxml"));
+            StackPane resultPane = loader.load();
 
             // Truy cập controller của ResultController
-            application.controller.ResultController resultController = loader.getController();
+            application.controller.Result2Controller result2Controller = loader.getController();
 
             // Pass thông tin kết quả
-            resultController.initialize(score, totalQuestions);
+            result2Controller.initialize(score);
 
             // Hiển thị cửa sổ kết quả
             Stage resultStage = new Stage();
@@ -194,6 +210,7 @@ public class Game2Controller {
             // Xử lý nếu có lỗi khi tạo cửa sổ kết quả
         }
     }
+
     // ẩn button
     private void hideButton(AnchorPane anchorPane, String selectedAnswer) {
         anchorPane.getChildren().removeIf(node -> {
@@ -207,16 +224,29 @@ public class Game2Controller {
 
 
     private void checkAnswer(String s1, String s2) {
+        boolean correctMatch = false;
+
         for (Map.Entry<String, String> entry : engVie.entrySet()) {
-            if ((s1.equals(entry.getKey()) && s2.equals(entry.getValue())) || ((s1.equals(entry.getValue()) && s2.equals(entry.getKey())))) {
-                score++;  // Increase the score for correct answer
+            if ((s1.equals(entry.getKey()) && s2.equals(entry.getValue())) || (s1.equals(entry.getValue()) && s2.equals(entry.getKey()))) {
+                score++;
+                checkAnswer.setText("Correct");
+                checkAnswer.setStyle("-fx-text-fill: green;");
                 hideButton(AnchorPane, s1);
                 hideButton(AnchorPane, s2);
-            } else {
-                wrongAttempts++;
+                correctMatch = true;
+                break;  // Thoát khỏi vòng lặp ngay sau khi tìm thấy kết quả đúng
             }
         }
+
+        if (!correctMatch) {
+            checkAnswer.setText("Wrong");
+            checkAnswer.setStyle("-fx-text-fill: red;");
+            wrongAttempts++;
+        }
+
+        answerStatusTimeline.play();
     }
+
 
     @FXML
     private void handleAnswerButtonClick(javafx.event.ActionEvent event) {
